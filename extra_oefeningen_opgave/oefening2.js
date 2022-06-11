@@ -9956,3 +9956,131 @@ const pokemonDetails = [
 
 
 
+
+// geeft enkel de pokémons uit de pokémonDetails die meer dan 500kg wegen terug
+function getPlusSizedPokemons(){
+   return  pokemonDetails.filter(p => p.weight > 500);
+}
+// array als input krijgt en die zal filteren van zwaar naar licht. (groot naar klein)
+function sortHighToLow(array) {
+    return array.sort((a, b) => b.weight - a.weight);
+}
+// Voor elke dikke pokemon zal er een Pokémon card gerenderd moeten worden.
+
+
+// 1.	Maak een nieuwe functie aan getPlusSizedPokemons(). Deze functie moet een nieuwe array returnen die enkel de pokémons uit de pokémonDetails array teruggeeft die meer dan 500kg wegen.
+// 2.	Schrijf vervolgens een functie die de voorgaande array als input krijgt en die de array zal filteren van zwaar naar licht.
+// 3.	Schrijf een functie renderPokemons(). Voor elke dikke pokemon zal er een Pokémon card gerenderd moeten worden. (zie screenshot).
+
+// a.	Als eerste moet de shiny_front afbeelding van de Pokémon getoond worden.
+// b.	Daaronder komt de naam van de Pokémon in een h2 te staan.
+// c.	Daaronder moet de url van de Pokémon komen te staan die staat opgeslagen in de pokémons array bovenaan de file.
+//   Je moet deze url echter op een specifieke manier gaan ophalen:
+//
+// Bij elke Pokémon in je gefilterde dikke Pokémons array staat een id. Schrijf een functie die over alle Pokémons in de pokemons array bovenaan gaat loopen, en die uit de “url” string het id van de Pokémon gaat filteren.
+// bv: uit "https://pokeapi.co/api/v2/pokemon/1/" moet het id 1 gefilterd worden.
+//
+// Gebruik vervolgens dit uit de string gefilterde id om deze te vergelijken met het id uit je dikke pokémons array, wiens card je op dit moment aan het renderen bent dus. Indien er een match is weet je dat die url bij de card hoort die je op dit moment bent aan het renderen. Return deze url en render ze in een h5 element.
+
+//4. Onder de url moet een korte beschrijving van de Pokémon komen.
+// a. Indien de Pokémon meer dan of gelijk aan 800kg weegt spreken we van een “fat” Pokémon, indien ze minder weegt spreken we van een “chubby” Pokémon.
+// b. Schrijf een functie die de persoonlijkheid van de Pokémon gaat bepalen.
+// Loop in deze functie over alle types van de Pokémon.
+// - Indien de Pokémon het fire type heeft krijgt hij de “fiery” personality.
+// - Indien de Pokémon het grass type heeft krijgt hij de “calm” personality.
+// - Indien de Pokémon het water type heeft krijgt hij de “cool” personality.
+// - Indien de Pokémon het poison type heeft krijgt hij de “toxic” personality.
+// - In alle andere gevallen krijgt de Pokémon de “dependable” personality.
+// c. Indien een Pokémon meerdere types heeft moeten alle personalities, gescheiden door een “and” weergegeven worden.
+
+renderPokemons();
+function renderPokemons(){
+
+    let plusSizedPokemons = getPlusSizedPokemons()
+    let arrayToRender = sortHighToLow(plusSizedPokemons)
+
+    arrayToRender.forEach(obj => {
+
+        /// gegevens verzamelen
+        let pokeUrl = getPokemonUrl(obj.id)
+        let pokePersoonlijkheid = bepaalPokemonPersoonlijkheid(obj.types)
+        let chubbyness = obj.weight < 800 ? 'chubby' : 'fat';
+        let x = getPokemonUrlById(obj.id)
+
+        // maak card
+        let cardcontainer = document.querySelector( 'div.container');
+        let card = document.createElement('div')
+        cardcontainer.appendChild(card)
+        let cardImg = document.createElement('div')
+        let shinyImg = document.createElement('img')
+        shinyImg.src = `${obj.sprites.front_shiny}`
+        cardImg.classList.add('card__img')
+        cardImg.appendChild(shinyImg)
+        card.appendChild(cardImg)
+        let pokeName = document.createElement('h2')
+        pokeName.classList.add('card__name')
+        pokeName.innerHTML = obj.name
+        card.appendChild(pokeName)
+        let pokemonUrl = document.createElement('h5')
+        pokemonUrl.innerHTML = pokeUrl
+        card.appendChild(pokemonUrl)
+        let poketype = document.createElement('p')
+        poketype.innerHTML = `${obj.name} is a ${chubbyness} pokemon. It's personality is ${pokePersoonlijkheid}.`
+        card.appendChild(poketype)
+
+    })
+
+
+}
+function getPokemonUrl(id){
+    let x =  pokemons.find(x => {
+        if(x.id !== id){
+            return x.url
+        }
+    })
+   return x.url
+}
+
+function getPokemonUrlById(id) {
+    return pokemons.find(pokemon => {
+        let url = pokemon.url;
+        let slashIndex = url.indexOf('/', url.length - 4);      //telt vanaf de lengte van url - 4     //https://pokeapi.co/api/v2/pokemo  'n/3/'
+                                                                // dan de eerste '/' die we tegen komen   //https://pokeapi.co/api/v2/pokemon '/'  3/
+                                                                // slashIndex = legte (https://pokeapi.co/api/v2/pokemon)
+
+        let urlId = url.substring(slashIndex + 1, url.length - 1);    // vanaf slashIndex + 1         https://pokeapi.co/api/v2/pokemon/
+                                                                      // tot de legte van de url -1   https://pokeapi.co/api/v2/pokemon/'3'
+
+        return id === parseInt(urlId);
+    });
+}
+
+
+
+function bepaalPokemonPersoonlijkheid(types){
+    let personality = '';
+    types.forEach((type, index) => {
+        let typeString = ''
+        if (index >= 1) {
+            typeString += ' and ';
+        }
+        switch (type.type.name) {
+            case 'fire' :
+                typeString += 'fiery';
+                break;
+            case 'grass' :
+                typeString += 'calm';
+                break;
+            case 'water' :
+                typeString += 'cool'
+                break;
+            case 'poison' :
+                typeString += 'toxic'
+                break;
+            default :
+                typeString += 'dependable';
+        }
+        personality += typeString;
+    });
+    return personality;
+}

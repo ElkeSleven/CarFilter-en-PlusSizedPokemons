@@ -80,7 +80,7 @@ function MaakSelect(){
 function CreateProductCards(){
     let cardContainer = document.createElement('div');
     cardContainer.classList.add('card-container');
-    let arrayToRender;
+    let arrayToRender ;
     if (selectionChangedCounter < 3) {
         let sortedArray = GetSortedArrayBySelectedSelect();
         arrayToRender  = GetArrayToRender(sortedArray)

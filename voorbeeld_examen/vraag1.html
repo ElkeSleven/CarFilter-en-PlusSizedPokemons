@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vraag 1</title>
+    <script defer src="vraag1.js"></script>
+</head>
+<body>
+<section>
+    <div style="display: flex; flex-direction: column" >
+        <label for="nummerInput" > input met attribute : type="number" </label>
+        <div>
+            <input id="nummerInput" type="number" >
+            <button id="btnControleerNummerInput">Controlleer</button>
+        </div>
+        <img src="" id="imgResultaatNrInput" alt="thumb" style="aspect-ratio: 1/1; width: 150px"/>
+    </div>
+
+<br>
+<br>
+
+    <div style="display: flex; flex-direction: column" >
+        <label for="textNrInput" > input met attribute : type="text" en oninput="this.value = this.value.replace(...</label>
+        <div>
+            <input type="text" id="textNrInput" oninput="this.value = this.value.replace(/[^0-9.]/, '').replace(/(\..*)\./);"  >
+            <button id="btnControleerTextNrInput">Controlleer</button>
+        </div>
+        <img src="" id="imgResultaatTextNrInput" alt="thumb" style="aspect-ratio: 1/1; width: 150px"/>
+    </div>
+</section>
+
+</body>
+</html>

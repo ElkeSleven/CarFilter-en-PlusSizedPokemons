@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oefeningen Hoofdstuk 1</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Javascript
+    <script defer src="js/jquery-3.5.1.min.js"></script>
+    <script defer src="js/bootstrap.min.js"></script>-->
+    <script defer src="js/hfdstk1.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="container">
+    <div class="row my-3">
+        <div class="col-12">
+            <h1 id="demo">Versoepelingen van de corona maatregelen.</h1>
+            <h2>Schrijf u in om op de hoogte te blijven van de corona maatregelen</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <form action="mailto:theo.truijen@pxl.be">
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-4">
+                        <label for="voornaam">Voornaam</label>
+                        <input type="text" class="form-control" id="voornaam" name="voornaam" required>
+                    </div>
+                    <div class="form-group col-12 col-md-4">
+                        <label for="achternaam">achternaam</label>
+                        <input type="text" class="form-control" id="achternaam" name="achternaam" required>
+                    </div>
+                    <div class="form-group col-12 col-md-4">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-12">
+                        <input type="submit" value="Indienen">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <h1 id="naam"></h1>
+            <h2 id="aftellen"></h2>
+            <blockquote id="quote" class="blockquote">
+                "Kom uit uw kot!"
+            </blockquote>
+            <ul id="outputJSlist"></ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
